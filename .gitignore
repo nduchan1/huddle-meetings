@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.env.local
+.env.*.local
+.vercel/
+*.log
+*.zip
+*.pdf
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -1,0 +1,39 @@
+{
+  "name": "huddle-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "REST API for Huddle - meetings manager for development teams",
+  "author": "Nitai Duchan",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/server.js",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "oxlint",
+    "test": "vitest run",
+    "db:init": "tsx scripts/db-init.ts"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.0",
+    "express": "^5.2.1",
+    "pg": "^8.23.0",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/node": "^24.13.5",
+    "@types/pg": "^8.23.1",
+    "@types/supertest": "^7.2.1",
+    "oxlint": "^1.83.0",
+    "supertest": "^7.2.2",
+    "tsx": "^4.23.13",
+    "typescript": "~6.0.3",
+    "vitest": "^5.0.1"
+  }
+}

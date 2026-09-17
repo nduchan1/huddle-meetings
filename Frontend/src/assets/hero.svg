@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" width="640" height="480" fill="none">
+  <rect x="56" y="48" width="290" height="290" rx="72" fill="#eef0ff" transform="rotate(-10 201 193)"/>
+  <circle cx="512" cy="356" r="112" fill="#e6f7f4"/>
+  <circle cx="576" cy="84" r="16" fill="#fff4ea"/>
+  <circle cx="596" cy="250" r="8" fill="#c7d2fe"/>
+  <circle cx="70" cy="300" r="10" fill="#99f6e4"/>
+  <path d="M92 110h14M99 103v14" stroke="#c7d2fe" stroke-width="3" stroke-linecap="round"/>
+  <path d="M538 300h12M544 294v12" stroke="#99f6e4" stroke-width="3" stroke-linecap="round"/>
+  <path d="M310 446h12M316 440v12" stroke="#fdba74" stroke-width="3" stroke-linecap="round"/>
+
+  <rect x="150" y="134" width="360" height="270" rx="22" fill="#4f46e5" opacity=".10"/>
+  <rect x="150" y="120" width="360" height="270" rx="22" fill="#fff" stroke="#e3e7f0" stroke-width="2"/>
+  <path d="M150 142a22 22 0 0 1 22-22h316a22 22 0 0 1 22 22v36H150z" fill="#4f46e5"/>
+  <rect x="206" y="104" width="14" height="34" rx="7" fill="#c7d2fe"/>
+  <rect x="440" y="104" width="14" height="34" rx="7" fill="#c7d2fe"/>
+  <g fill="#fff" opacity=".8">
+    <rect x="176" y="154" width="26" height="8" rx="4"/>
+    <rect x="224" y="154" width="26" height="8" rx="4"/>
+    <rect x="272" y="154" width="26" height="8" rx="4"/>
+    <rect x="320" y="154" width="26" height="8" rx="4"/>
+    <rect x="368" y="154" width="26" height="8" rx="4"/>
+    <rect x="416" y="154" width="26" height="8" rx="4"/>
+  </g>
+  <g stroke="#eceff5" stroke-width="2">
+    <path d="M150 232h360M150 286h360M150 340h360"/>
+    <path d="M222 178v212M294 178v212M366 178v212M438 178v212"/>
+  </g>
+
+  <rect x="160" y="190" width="54" height="30" rx="8" fill="#eaf8ee" stroke="#4ade80" stroke-width="2"/>
+  <rect x="232" y="244" width="126" height="30" rx="8" fill="#eaf8ee" stroke="#4ade80" stroke-width="2"/>
+  <rect x="304" y="190" width="126" height="30" rx="8" fill="#fff4ea" stroke="#fb923c" stroke-width="2"/>
+  <rect x="376" y="298" width="126" height="30" rx="8" fill="#fff4ea" stroke="#fb923c" stroke-width="2"/>
+  <rect x="160" y="352" width="126" height="30" rx="8" fill="#fff4ea" stroke="#fb923c" stroke-width="2"/>
+  <g stroke-width="4" stroke-linecap="round">
+    <path d="M170 205h34" stroke="#4ade80"/>
+    <path d="M242 259h70" stroke="#4ade80"/>
+    <path d="M314 205h70" stroke="#fb923c"/>
+    <path d="M386 313h60" stroke="#fb923c"/>
+    <path d="M170 367h80" stroke="#fb923c"/>
+  </g>
+  <circle cx="330" cy="313" r="12" fill="#4f46e5"/>
+  <circle cx="330" cy="313" r="5" fill="#fff"/>
+
+  <circle cx="548" cy="164" r="60" fill="#4f46e5" opacity=".12"/>
+  <circle cx="548" cy="150" r="56" fill="#fff" stroke="#4f46e5" stroke-width="6"/>
+  <path d="M548 104v8M548 188v8M504 150h8M584 150h8" stroke="#c7d2fe" stroke-width="3" stroke-linecap="round"/>
+  <path d="M548 150V118" stroke="#1a2238" stroke-width="6" stroke-linecap="round"/>
+  <path d="M548 150l22 14" stroke="#1a2238" stroke-width="6" stroke-linecap="round"/>
+  <path d="M548 150l-18 26" stroke="#0d9488" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="548" cy="150" r="5" fill="#4f46e5"/>
+
+  <defs>
+    <clipPath id="avatar-1"><circle cx="130" cy="420" r="32"/></clipPath>
+    <clipPath id="avatar-2"><circle cx="178" cy="420" r="32"/></clipPath>
+    <clipPath id="avatar-3"><circle cx="226" cy="420" r="32"/></clipPath>
+  </defs>
+  <circle cx="130" cy="420" r="36" fill="#fff"/>
+  <circle cx="130" cy="420" r="32" fill="#4f46e5"/>
+  <g clip-path="url(#avatar-1)">
+    <circle cx="130" cy="412" r="11" fill="#fff"/>
+    <ellipse cx="130" cy="446" rx="20" ry="16" fill="#fff"/>
+  </g>
+  <circle cx="178" cy="420" r="36" fill="#fff"/>
+  <circle cx="178" cy="420" r="32" fill="#0d9488"/>
+  <g clip-path="url(#avatar-2)">
+    <circle cx="178" cy="412" r="11" fill="#fff"/>
+    <ellipse cx="178" cy="446" rx="20" ry="16" fill="#fff"/>
+  </g>
+  <circle cx="226" cy="420" r="36" fill="#fff"/>
+  <circle cx="226" cy="420" r="32" fill="#fb923c"/>
+  <g clip-path="url(#avatar-3)">
+    <circle cx="226" cy="412" r="11" fill="#fff"/>
+    <ellipse cx="226" cy="446" rx="20" ry="16" fill="#fff"/>
+  </g>
+</svg>

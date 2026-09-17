@@ -1,0 +1,578 @@
+{
+  "info": {
+    "_postman_id": "250f6e68-811d-42ff-8b8e-4e4fa52447ff",
+    "name": "Huddle API",
+    "description": "End-to-end checks for the Huddle meetings API. Out of the box the requests target the live API on Vercel; to test a local server, import the Huddle Local environment (baseUrl = http://localhost:3001) and select it, or edit the baseUrl collection variable. Start the API, then use Run collection and run the requests top to bottom: the Teams and Meetings folders create, read, update and delete a meeting and pass the ids along through collection variables, and the Validation errors folder verifies the error responses.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "Health check",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Service status is ok', function () { pm.expect(pm.response.json().status).to.eql('ok'); });",
+                  "pm.test('Database status is ok', function () { pm.expect(pm.response.json().database).to.eql('ok'); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "health"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Teams",
+      "item": [
+        {
+          "name": "List teams",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var teams = pm.response.json();",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response is a non-empty array', function () { pm.expect(teams).to.be.an('array').that.is.not.empty; });",
+                  "pm.test('First team has an id and a name', function () { pm.expect(teams[0]).to.include.all.keys('id', 'name'); });",
+                  "pm.collectionVariables.set('teamId', teams[0].id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/teams",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "teams"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Meetings of a team",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var meetings = pm.response.json();",
+                  "var expectedTeamId = Number(pm.collectionVariables.get('teamId'));",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response is an array', function () { pm.expect(meetings).to.be.an('array'); });",
+                  "pm.test('Every meeting belongs to the requested team', function () { pm.expect(meetings.every(function (meeting) { return meeting.teamId === expectedTeamId; })).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/teams/{{teamId}}/meetings",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "teams",
+                "{{teamId}}",
+                "meetings"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Meetings",
+      "item": [
+        {
+          "name": "Create meeting",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var meeting = pm.response.json();",
+                  "pm.test('Status code is 201', function () { pm.response.to.have.status(201); });",
+                  "pm.test('Created meeting has an id', function () { pm.expect(meeting.id).to.be.a('number'); });",
+                  "pm.test('Created meeting includes the team name', function () { pm.expect(meeting.teamName).to.be.a('string'); });",
+                  "pm.collectionVariables.set('meetingId', meeting.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/meetings",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "meetings"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"teamId\": {{teamId}},\n  \"startTime\": \"2027-03-10T09:00:00.000Z\",\n  \"endTime\": \"2027-03-10T10:30:00.000Z\",\n  \"description\": \"Postman test meeting\",\n  \"room\": \"Blue Room\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get meeting by id",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Description matches the created meeting', function () { pm.expect(pm.response.json().description).to.eql('Postman test meeting'); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/meetings/{{meetingId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "meetings",
+                "{{meetingId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update meeting",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Room was updated', function () { pm.expect(pm.response.json().room).to.eql('Green Room'); });",
+                  "pm.test('End time was updated', function () { pm.expect(pm.response.json().endTime).to.eql('2027-03-10T11:30:00.000Z'); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/meetings/{{meetingId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "meetings",
+                "{{meetingId}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"teamId\": {{teamId}},\n  \"startTime\": \"2027-03-10T09:00:00.000Z\",\n  \"endTime\": \"2027-03-10T11:30:00.000Z\",\n  \"description\": \"Postman test meeting\",\n  \"room\": \"Green Room\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete meeting",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 204', function () { pm.response.to.have.status(204); });",
+                  "pm.test('Response has no body', function () { pm.expect(pm.response.text()).to.eql(''); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/meetings/{{meetingId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "meetings",
+                "{{meetingId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get deleted meeting",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 404', function () { pm.response.to.have.status(404); });",
+                  "pm.test('Error says the meeting was not found', function () { pm.expect(pm.response.json().error).to.eql('Meeting not found'); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/meetings/{{meetingId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "meetings",
+                "{{meetingId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Validation errors",
+      "item": [
+        {
+          "name": "Empty body",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var body = pm.response.json();",
+                  "pm.test('Status code is 400', function () { pm.response.to.have.status(400); });",
+                  "pm.test('Error is Validation failed', function () { pm.expect(body.error).to.eql('Validation failed'); });",
+                  "pm.test('Every required field is reported', function () { pm.expect(body.fields).to.include.all.keys('teamId', 'startTime', 'endTime', 'description', 'room'); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/meetings",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "meetings"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Start time in the past",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 400', function () { pm.response.to.have.status(400); });",
+                  "pm.test('startTime error is reported', function () { pm.expect(pm.response.json().fields.startTime).to.eql('Start time cannot be in the past'); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/meetings",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "meetings"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"teamId\": {{teamId}},\n  \"startTime\": \"2020-01-06T09:00:00.000Z\",\n  \"endTime\": \"2020-01-06T10:00:00.000Z\",\n  \"description\": \"Postman test meeting\",\n  \"room\": \"Blue Room\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "End time before start time",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 400', function () { pm.response.to.have.status(400); });",
+                  "pm.test('endTime error is reported', function () { pm.expect(pm.response.json().fields.endTime).to.eql('End time must be after the start time'); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/meetings",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "meetings"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"teamId\": {{teamId}},\n  \"startTime\": \"2027-03-10T10:00:00.000Z\",\n  \"endTime\": \"2027-03-10T09:00:00.000Z\",\n  \"description\": \"Postman test meeting\",\n  \"room\": \"Blue Room\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Unknown team",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 400', function () { pm.response.to.have.status(400); });",
+                  "pm.test('teamId error is reported', function () { pm.expect(pm.response.json().fields.teamId).to.eql('Team does not exist'); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/meetings",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "meetings"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"teamId\": 999999,\n  \"startTime\": \"2027-03-10T09:00:00.000Z\",\n  \"endTime\": \"2027-03-10T10:30:00.000Z\",\n  \"description\": \"Postman test meeting\",\n  \"room\": \"Blue Room\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Unknown meeting",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 404', function () { pm.response.to.have.status(404); });",
+                  "pm.test('Error says the meeting was not found', function () { pm.expect(pm.response.json().error).to.eql('Meeting not found'); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/meetings/999999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "meetings",
+                "999999"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Invalid meeting id",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 400', function () { pm.response.to.have.status(400); });",
+                  "pm.test('Error says the id is invalid', function () { pm.expect(pm.response.json().error).to.eql('Invalid meeting id'); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/meetings/abc",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "meetings",
+                "abc"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://huddle-api-mu.vercel.app",
+      "type": "string"
+    },
+    {
+      "key": "teamId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "meetingId",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}
