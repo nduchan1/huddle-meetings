@@ -417,6 +417,12 @@ describe.skipIf(testDatabaseUrl === '')('Huddle API', () => {
       expect(res.headers['access-control-allow-methods']).toContain('DELETE');
     });
 
+    it('allows any port on localhost', async () => {
+      const res = await request(app).get('/api/teams').set('Origin', 'http://localhost:5174');
+      expect(res.status).toBe(200);
+      expect(res.headers['access-control-allow-origin']).toBe('http://localhost:5174');
+    });
+
     it('does not allow an unknown origin', async () => {
       const res = await request(app).get('/api/teams').set('Origin', 'https://evil.example');
       expect(res.status).toBe(200);

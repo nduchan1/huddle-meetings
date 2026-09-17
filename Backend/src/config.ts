@@ -23,12 +23,15 @@ function readDatabaseUrl(raw: string | undefined): string {
   return url;
 }
 
-function readCorsOrigins(raw: string | undefined): string[] {
+// Any port on the local machine is fine, so a dev server that had to pick another port still works
+const LOCAL_ORIGIN = /^https?:[/][/](localhost|127[.]0[.]0[.]1)(:[0-9]+)?$/;
+
+function readCorsOrigins(raw: string | undefined): (string | RegExp)[] {
   const origins = (raw ?? '')
     .split(',')
     .map((origin) => origin.trim())
     .filter((origin) => origin.length > 0);
-  return origins.length > 0 ? origins : DEFAULT_CORS_ORIGINS;
+  return [LOCAL_ORIGIN, ...(origins.length > 0 ? origins : DEFAULT_CORS_ORIGINS)];
 }
 
 export const config = {
