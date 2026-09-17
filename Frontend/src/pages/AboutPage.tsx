@@ -96,8 +96,9 @@ export function AboutPage() {
             <p className="profile__role">Full Stack Web Development Student · John Bryce</p>
           </div>
           <p className="profile__bio">
-            I'm a full-stack web development student at John Bryce. Huddle is my third course task: a complete
-            client–server application with a real database, built to be simple to use and simple to grade.
+            I'm a full-stack web development student at John Bryce. Huddle is my third course task and my first
+            full client–server project: a React front end, a Node.js API and a PostgreSQL database that I designed
+            and built end to end.
           </p>
           <a className="profile__link" href="https://github.com/nduchan1" target="_blank" rel="noreferrer">
             <GitHubIcon size={18} />
