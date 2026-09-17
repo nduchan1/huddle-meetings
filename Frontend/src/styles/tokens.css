@@ -23,7 +23,7 @@
   --radius-sm: 10px;
   --shadow-sm: 0 2px 8px rgba(26, 34, 56, 0.06);
   --shadow: 0 12px 32px rgba(26, 34, 56, 0.1);
-  --focus: 0 0 0 3px rgba(79, 70, 229, 0.35);
+  --focus: 0 0 0 2px #fff, 0 0 0 4px var(--primary);
   --font: 'Manrope', 'Segoe UI', system-ui, -apple-system, sans-serif;
   --mono: ui-monospace, 'Cascadia Code', Consolas, monospace;
   --content-width: 1120px;
@@ -133,7 +133,7 @@ strong {
 }
 
 :focus-visible {
-  outline: 3px solid rgba(79, 70, 229, 0.35);
+  outline: 2px solid var(--primary);
   outline-offset: 2px;
 }
 

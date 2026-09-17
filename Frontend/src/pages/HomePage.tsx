@@ -26,7 +26,13 @@ export function HomePage() {
             </Button>
           </div>
         </div>
-        <img className="hero__art" src={heroIllustration} alt="" width={640} height={480} />
+        <img
+          className="hero__art"
+          src={heroIllustration}
+          alt="Illustration of a team calendar with upcoming meetings in orange and past meetings in green"
+          width={640}
+          height={480}
+        />
       </section>
 
       <section className="features" aria-label="What Huddle offers">

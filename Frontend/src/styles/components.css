@@ -28,7 +28,8 @@
 }
 
 .btn:focus-visible {
-  outline: none;
+  outline: 3px solid transparent;
+  outline-offset: 2px;
   box-shadow: var(--focus);
 }
 
@@ -59,7 +60,7 @@
 .btn--primary:focus-visible {
   box-shadow:
     0 0 0 2px #fff,
-    0 0 0 5px rgba(79, 70, 229, 0.5);
+    0 0 0 4px var(--primary);
 }
 
 .btn--secondary {
@@ -84,7 +85,9 @@
 }
 
 .btn--danger:focus-visible {
-  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.35);
+  box-shadow:
+    0 0 0 2px #fff,
+    0 0 0 4px var(--danger);
 }
 
 .btn--danger.btn--solid {
@@ -220,6 +223,8 @@
   display: flex;
   align-items: flex-start;
   gap: 8px;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .meeting-card__meta-row > svg {
@@ -274,7 +279,7 @@
 
 .input::placeholder,
 .textarea::placeholder {
-  color: var(--ink-muted);
+  color: var(--ink-soft);
 }
 
 .input:hover,
@@ -285,8 +290,11 @@
 
 .input:focus-visible,
 .select:focus-visible,
-.textarea:focus-visible {
-  outline: none;
+.textarea:focus-visible,
+.field:focus-within .input,
+.field:focus-within .select,
+.field:focus-within .textarea {
+  outline: 3px solid transparent;
   border-color: var(--primary);
   box-shadow: var(--focus);
 }
@@ -599,5 +607,5 @@
 
 .method--delete {
   background: var(--danger-bg);
-  color: var(--danger);
+  color: #b91c1c;
 }

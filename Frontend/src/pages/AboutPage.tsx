@@ -38,7 +38,7 @@ export function AboutPage() {
         <article className="card about-card" aria-labelledby="about-huddle">
           <div>
             <h2 id="about-huddle" className="about-card__title">
-              About Huddle
+              The system
             </h2>
             <p className="about-card__text">
               Huddle is a meeting manager for the development teams of a high-tech company. The React front end
